@@ -7,7 +7,7 @@ import type { MetadataRoute } from "next";
 export const dynamic = "force-static";
 export const revalidate = false;
 
-const BASE = "https://SUBDOMAIN.starmap.quest";
+const BASE = "https://tubekit.starmap.quest";
 
 // ⚠️ Replace with real routes once Pod builds out the site.
 // Add dynamic routes (e.g. /[slug]) by importing your data and mapping over it.

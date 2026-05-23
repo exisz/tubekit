@@ -3,9 +3,43 @@
   themes: all;
 }
 
-/* STYLEGUIDE: Replace theme colors based on your STYLEGUIDE.md */
 @theme {
-  --color-primary: #2563eb;
-  --color-secondary: #7c3aed;
-  --color-accent: #f59e0b;
+  --color-primary: #ff0033;
+  --color-secondary: #21e6c1;
+  --color-accent: #ffd166;
+}
+
+:root {
+  --ink: #080b12;
+  --panel: #101827;
+  --muted: #8ea4bd;
+  --tube: #ff0033;
+  --signal: #21e6c1;
+  --warm: #ffd166;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 0, 51, 0.24), transparent 28rem),
+    radial-gradient(circle at 82% 0%, rgba(33, 230, 193, 0.16), transparent 34rem),
+    linear-gradient(180deg, #080b12 0%, #0c111c 45%, #07090f 100%);
+  color: #eef6ff;
+}
+
+.studio-grid {
+  background-image:
+    linear-gradient(rgba(33, 230, 193, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(33, 230, 193, 0.08) 1px, transparent 1px);
+  background-size: 44px 44px;
+}
+
+.scanline::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: repeating-linear-gradient(180deg, rgba(255,255,255,0.04) 0 1px, transparent 1px 6px);
+  mix-blend-mode: overlay;
 }
