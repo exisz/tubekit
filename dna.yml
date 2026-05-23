@@ -1,0 +1,8 @@
+id: dna://site/starmap-template
+type: site
+title: "starmap-template"
+url: https://starmap-template.starmap.quest
+repo: exisz/starmap-template
+managed_by: dna://agent/starmap
+deployed_by: dna://agent/starmap
+status: deployed
