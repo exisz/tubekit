@@ -23,6 +23,49 @@ const examples = [
   "https://www.youtube.com/shorts/dQw4w9WgXcQ",
 ];
 
+const toolLandingCards = [
+  {
+    href: "#youtube-thumbnail-downloader",
+    title: "YouTube Thumbnail Downloader",
+    body: "Open max-res, SD, HQ, MQ, and default thumbnail files from any public YouTube video ID.",
+  },
+  {
+    href: "#youtube-metadata-inspector",
+    title: "YouTube Metadata Inspector",
+    body: "Fetch public oEmbed title, channel, author URL, and watch-link details without a login wall.",
+  },
+  {
+    href: "#youtube-embed-generator",
+    title: "YouTube Embed Code Generator",
+    body: "Copy responsive-ready iframe markup for blogs, docs, landing pages, and client previews.",
+  },
+  {
+    href: "#youtube-timestamp-link-generator",
+    title: "YouTube Timestamp Link Generator",
+    body: "Convert 1:23, 83, or 1m23s into a shareable YouTube URL that starts at the exact moment.",
+  },
+  {
+    href: "#youtube-tag-cleaner",
+    title: "YouTube Tag Cleaner",
+    body: "Clean pasted keywords, hashtags, and competitor description notes into a deduplicated tag bundle.",
+  },
+] as const;
+
+const faqs = [
+  [
+    "Can TubeKit show live YouTube video stats?",
+    "Not yet. Live views, likes, and comments require the YouTube Data API, quota management, and a server-side key. TubeKit currently shows public oEmbed metadata instead of pretending to expose live stats.",
+  ],
+  [
+    "Does the tag tool extract private YouTube tags from a URL?",
+    "No. YouTube does not expose true creator tags through public browser APIs. The current tool is a tag cleaner for pasted descriptions, hashtags, and keyword lists.",
+  ],
+  [
+    "Can I download any YouTube thumbnail?",
+    "TubeKit opens public thumbnail image URLs. Only reuse thumbnails when you own the rights, have permission, or are using them under a valid legal exception.",
+  ],
+] as const;
+
 function extractVideoId(input: string) {
   const value = input.trim();
   if (/^[a-zA-Z0-9_-]{11}$/.test(value)) return value;
@@ -99,6 +142,12 @@ export default function Home() {
     }
   }
 
+  async function copyText(value: string, label: string) {
+    if (!value) return;
+    await navigator.clipboard.writeText(value);
+    setError(`${label} copied to clipboard.`);
+  }
+
   return (
     <div id="top" className="studio-grid relative overflow-hidden">
       <section className="scanline relative mx-auto grid max-w-7xl gap-10 px-5 pb-16 pt-16 lg:grid-cols-[1.05fr_.95fr] lg:pb-24 lg:pt-24">
@@ -111,14 +160,14 @@ export default function Home() {
           </h1>
           <p className="mt-7 max-w-2xl text-lg leading-8 text-slate-300">
             Paste one YouTube URL and instantly get thumbnail downloads, video ID parsing, embed code,
-            timestamp links, channel metadata, and launch-ready tag bundles — all client-side and free.
+            timestamp links, public metadata, and clean tag bundles — all client-side and free.
           </p>
           <div className="mt-9 flex flex-col gap-3 sm:flex-row">
             <a href="#tools" className="rounded-full bg-[#ff0033] px-6 py-3 text-center font-black text-white shadow-[0_0_40px_rgba(255,0,51,.35)] hover:bg-[#ff335c]">Start with a URL</a>
-            <a href="#limits" className="rounded-full border border-white/15 px-6 py-3 text-center font-bold text-white hover:bg-white/10">Read API notes</a>
+            <a href="#seo-tools" className="rounded-full border border-white/15 px-6 py-3 text-center font-bold text-white hover:bg-white/10">Browse tool pages</a>
           </div>
           <div className="mt-10 grid max-w-xl grid-cols-3 gap-3">
-            {["6 tools", "0 login", "public data"].map((item) => (
+            {["5 core tools", "0 login", "honest API notes"].map((item) => (
               <div key={item} className="rounded-2xl border border-white/10 bg-white/[0.04] p-4 text-center text-sm font-bold text-slate-200 shadow-2xl shadow-black/20">{item}</div>
             ))}
           </div>
@@ -137,6 +186,22 @@ export default function Home() {
               <p><span className="text-slate-500">Timestamp:</span> <code className="text-[#ffd166]">{seconds}s</code></p>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section id="seo-tools" className="mx-auto max-w-7xl px-5 py-14">
+        <div className="mb-8 max-w-3xl">
+          <p className="text-sm font-black uppercase tracking-[0.28em] text-[#21e6c1]">Creator tool pages</p>
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-white md:text-5xl">Pick the exact YouTube utility you need.</h2>
+          <p className="mt-4 text-slate-400">TubeKit keeps each workflow clearly named: thumbnail download, public metadata inspection, embeds, timestamp links, and tag cleaning. No fake private tag extraction, no fake live stats.</p>
+        </div>
+        <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-5">
+          {toolLandingCards.map((tool) => (
+            <a key={tool.href} href={tool.href} className="rounded-[1.5rem] border border-white/10 bg-white/[0.045] p-5 transition hover:-translate-y-1 hover:border-[#21e6c1]/60 hover:bg-white/[0.07]">
+              <h3 className="text-lg font-black text-white">{tool.title}</h3>
+              <p className="mt-3 text-sm leading-6 text-slate-400">{tool.body}</p>
+            </a>
+          ))}
         </div>
       </section>
 
@@ -162,9 +227,10 @@ export default function Home() {
         </form>
 
         <div className="mt-6 grid gap-5 lg:grid-cols-2">
-          <div className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5">
+          <div id="youtube-thumbnail-downloader" className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5">
             <h3 className="text-xl font-black text-white">Thumbnail downloader</h3>
-            <p className="mt-2 text-sm text-slate-400">Uses YouTube&apos;s public image URL pattern. Open the image, then save it.</p>
+            <p className="mt-2 text-sm text-slate-400">Uses YouTube&apos;s public image URL pattern. Open the image, then save it. Max resolution is not available for every video; try HQ or SD if maxres returns a placeholder.</p>
+            <p className="mt-3 rounded-2xl border border-[#ffd166]/20 bg-[#ffd166]/10 p-3 text-xs leading-5 text-[#fff3c4]">Only download and reuse thumbnails you own, have permission to use, or can lawfully reference under your local copyright rules.</p>
             <div className="mt-5 grid gap-3 sm:grid-cols-2">
               {qualities.map(([quality, label]) => (
                 <a key={quality} href={videoId ? `https://img.youtube.com/vi/${videoId}/${quality}.jpg` : "#"} target="_blank" className="rounded-2xl border border-white/10 bg-black/25 p-4 hover:border-[#21e6c1]/50">
@@ -175,8 +241,8 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5">
-            <h3 className="text-xl font-black text-white">Metadata inspector</h3>
+          <div id="youtube-metadata-inspector" className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5">
+            <h3 className="text-xl font-black text-white">Metadata inspector, not live stats</h3>
             <div className="mt-4 space-y-3 text-sm">
               <p><span className="text-slate-500">Title:</span> <span className="text-slate-100">{oembed?.title ?? "Fetch metadata to load title"}</span></p>
               <p><span className="text-slate-500">Channel:</span> <a className="text-[#21e6c1]" href={oembed?.author_url} target="_blank">{oembed?.author_name ?? "—"}</a></p>
@@ -184,13 +250,19 @@ export default function Home() {
             </div>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5">
-            <h3 className="text-xl font-black text-white">Embed code generator</h3>
+          <div id="youtube-embed-generator" className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5">
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-xl font-black text-white">Embed code generator</h3>
+              <button type="button" onClick={() => copyText(embedCode, "Embed code")} className="rounded-full border border-white/15 px-3 py-1 text-xs font-bold text-slate-200 hover:bg-white/10">Copy embed</button>
+            </div>
             <textarea readOnly value={embedCode} className="textarea mt-4 min-h-36 w-full border-white/10 bg-black/35 font-mono text-xs text-slate-200" />
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5">
-            <h3 className="text-xl font-black text-white">Timestamp link builder</h3>
+          <div id="youtube-timestamp-link-generator" className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5">
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-xl font-black text-white">Timestamp link builder</h3>
+              <button type="button" onClick={() => copyText(timestampUrl, "Timestamp URL")} className="rounded-full border border-white/15 px-3 py-1 text-xs font-bold text-slate-200 hover:bg-white/10">Copy link</button>
+            </div>
             <div className="mt-4 flex gap-3">
               <input value={timestamp} onChange={(event) => setTimestamp(event.target.value)} className="input flex-1 border-white/10 bg-black/35 text-white" placeholder="1:23, 83, 1m23s" />
               <span className="grid min-w-20 place-items-center rounded-xl bg-white/10 font-mono text-[#ffd166]">{seconds}s</span>
@@ -198,9 +270,12 @@ export default function Home() {
             <a className="mt-4 block break-all rounded-2xl border border-white/10 bg-black/25 p-4 text-sm text-[#21e6c1]" href={timestampUrl} target="_blank">{timestampUrl || "Add a video first"}</a>
           </div>
 
-          <div className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5 lg:col-span-2">
-            <h3 className="text-xl font-black text-white">Tag cleaner & hashtag extractor</h3>
-            <p className="mt-2 text-sm text-slate-400">Paste a competitor description, rough keyword list, or hashtags. TubeKit deduplicates it into a clean tag bundle.</p>
+          <div id="youtube-tag-cleaner" className="rounded-[2rem] border border-white/10 bg-[#101827]/80 p-5 lg:col-span-2">
+            <div className="flex items-center justify-between gap-3">
+              <h3 className="text-xl font-black text-white">Tag cleaner & hashtag extractor</h3>
+              <button type="button" onClick={() => copyText(tags.join(", "), "Tag bundle")} className="rounded-full border border-white/15 px-3 py-1 text-xs font-bold text-slate-200 hover:bg-white/10">Copy tags</button>
+            </div>
+            <p className="mt-2 text-sm text-slate-400">Paste a competitor description, rough keyword list, or hashtags. TubeKit deduplicates it into a clean tag bundle. It does not claim to extract private YouTube tags from a URL.</p>
             <textarea value={tagText} onChange={(event) => setTagText(event.target.value)} className="textarea mt-4 min-h-28 w-full border-white/10 bg-black/35 text-white" />
             <div className="mt-4 flex flex-wrap gap-2">
               {tags.map((tag) => <span key={tag} className="rounded-full bg-[#21e6c1]/10 px-3 py-1 text-sm font-semibold text-[#9fffee]">{tag}</span>)}
@@ -220,6 +295,21 @@ export default function Home() {
               <p className="font-mono text-sm text-[#ff0033]">{num}</p>
               <h3 className="mt-5 text-2xl font-black text-white">{title}</h3>
               <p className="mt-3 text-slate-400">{body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <section id="faq" className="mx-auto max-w-7xl px-5 py-16">
+        <div className="max-w-3xl">
+          <p className="text-sm font-black uppercase tracking-[0.28em] text-[#21e6c1]">FAQ</p>
+          <h2 className="mt-2 text-3xl font-black tracking-tight text-white md:text-5xl">Honest answers before you paste a URL.</h2>
+        </div>
+        <div className="mt-8 grid gap-4 md:grid-cols-3">
+          {faqs.map(([question, answer]) => (
+            <div key={question} className="rounded-[2rem] border border-white/10 bg-white/[0.04] p-6">
+              <h3 className="text-lg font-black text-white">{question}</h3>
+              <p className="mt-3 text-sm leading-6 text-slate-400">{answer}</p>
             </div>
           ))}
         </div>

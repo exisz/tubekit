@@ -2,7 +2,7 @@
 
 import Script from "next/script";
 
-const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_ID;
+const ADSENSE_ID = process.env.NEXT_PUBLIC_ADSENSE_PUBLISHER_ID ?? process.env.NEXT_PUBLIC_ADSENSE_ID;
 
 export default function GoogleAdSense() {
   if (!ADSENSE_ID) return null;
