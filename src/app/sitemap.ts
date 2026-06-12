@@ -9,8 +9,14 @@ export const revalidate = false;
 
 const BASE = "https://tubekit.starmap.quest";
 
-// ⚠️ Replace with real routes once Pod builds out the site.
-// Add dynamic routes (e.g. /[slug]) by importing your data and mapping over it.
+const toolRoutes = [
+  "youtube-thumbnail-downloader",
+  "youtube-metadata-inspector",
+  "youtube-embed-generator",
+  "youtube-timestamp-link-generator",
+  "youtube-tag-cleaner",
+] as const;
+
 export default function sitemap(): MetadataRoute.Sitemap {
   const now = new Date();
   return [
@@ -20,5 +26,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "weekly",
       priority: 1,
     },
+    ...toolRoutes.map((route) => ({
+      url: `${BASE}/${route}`,
+      lastModified: now,
+      changeFrequency: "weekly" as const,
+      priority: 0.9,
+    })),
   ];
 }
