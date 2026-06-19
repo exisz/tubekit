@@ -25,27 +25,27 @@ const examples = [
 
 const toolLandingCards = [
   {
-    href: "#youtube-thumbnail-downloader",
+    href: "/youtube-thumbnail-downloader",
     title: "YouTube Thumbnail Downloader",
     body: "Open max-res, SD, HQ, MQ, and default thumbnail files from any public YouTube video ID.",
   },
   {
-    href: "#youtube-metadata-inspector",
+    href: "/youtube-metadata-inspector",
     title: "YouTube Metadata Inspector",
     body: "Fetch public oEmbed title, channel, author URL, and watch-link details without a login wall.",
   },
   {
-    href: "#youtube-embed-generator",
+    href: "/youtube-embed-generator",
     title: "YouTube Embed Code Generator",
     body: "Copy responsive-ready iframe markup for blogs, docs, landing pages, and client previews.",
   },
   {
-    href: "#youtube-timestamp-link-generator",
+    href: "/youtube-timestamp-link-generator",
     title: "YouTube Timestamp Link Generator",
     body: "Convert 1:23, 83, or 1m23s into a shareable YouTube URL that starts at the exact moment.",
   },
   {
-    href: "#youtube-tag-cleaner",
+    href: "/youtube-tag-cleaner",
     title: "YouTube Tag Cleaner",
     body: "Clean pasted keywords, hashtags, and competitor description notes into a deduplicated tag bundle.",
   },

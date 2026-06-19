@@ -1,34 +1,44 @@
-# SITE_TITLE
+# TubeKit
 
-SITE_DESCRIPTION
+Free YouTube creator toolkit for fast thumbnail, metadata, embed, timestamp, and tag-cleaning workflows.
+
+Production: https://tubekit.starmap.quest
+
+## What is included
+
+- YouTube Thumbnail Downloader using public `img.youtube.com/vi/{id}/{quality}.jpg` URLs.
+- YouTube Metadata Inspector using public oEmbed title/channel data.
+- YouTube Embed Code Generator for copy-ready iframe snippets.
+- YouTube Timestamp Link Generator for seconds, `mm:ss`, `hh:mm:ss`, and compact time formats.
+- YouTube Tag Cleaner for pasted keywords, descriptions, and hashtags.
+- Independent SEO landing pages for each core tool plus sitemap entries.
+
+## Honest limits
+
+TubeKit does not claim to expose private YouTube tags or live video statistics. True views, likes, comments, and creator tags require the YouTube Data API, quota management, and server-side key handling.
 
 ## Stack
+
 - Next.js 16 + React 19 + TypeScript 5
 - Tailwind CSS 4 + DaisyUI 5
 - Static export (`output: "export"`)
-- pnpm
+- Vercel GitHub integration deploys from `main`
 
-## Setup
+## Local development
+
 ```bash
 pnpm install
-pnpm dev       # http://localhost:3000
-pnpm build     # static export to out/
+pnpm dev
 ```
 
-## Customize
-1. Replace all `SITE_TITLE`, `SITE_DESCRIPTION`, `SUBDOMAIN`, `DAISY_THEME` placeholders
-2. Edit `STYLEGUIDE.md` with design references
-3. Implement scraper: `scripts/scrape.py`
-4. Update `src/app/sitemap.ts` with dynamic routes
-5. Add JSON-LD via `src/components/JsonLd.tsx`
+Cron pods must not run local production builds in this repo; Vercel is the deployment validation path.
 
-## Data
-- Scraper: `scripts/scrape.py`
-- Output: `src/data/records.json`
-- Budget: ≤$5 AUD/year
+## Data sources
 
-## Deploy
-Vercel auto-deploys from `main` branch.
-Domain: `SUBDOMAIN.rollersoft.com.au`
+- Public YouTube thumbnail URL pattern
+- YouTube public oEmbed endpoint
+- Client-side parsing and formatting only
 
+## Monetization placeholders
 
+Google AdSense is wired through `NEXT_PUBLIC_ADSENSE_PUBLISHER_ID` when present. Creator-tool affiliate placements are future work.
